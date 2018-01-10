@@ -1,17 +1,27 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Route, Link } from 'react-router-dom';
 import { Button, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import fontawesome from '@fortawesome/fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
-fontawesome.library.add(faLock);
+import faCaretSquareLeft from '@fortawesome/fontawesome-free-solid/faCaretSquareLeft';
+fontawesome.library.add(faLock, faCaretSquareLeft);
 
 class Header extends React.Component {
     render() {
+        const { location } = this.props;
+
         return (
             <React.Fragment>
                 <header className="header">
                     <section className="page-heading">
+                        { location.pathname === '/' ?
                         <h2 className="page-title"><Link to="/">Journal</Link></h2>
+                        :
+                        <Route render={({ history }) => (
+                            <Button color="secondary" className="page-nav-back-btn" onClick={() => { history.push('/') }}><i class="fas fa-caret-square-left"></i> Back</Button>
+                        )} />
+                        }
                     </section>
 
                     <nav className="page-nav">
@@ -34,4 +44,5 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+const HeaderWithRouter = withRouter(Header);
+export default HeaderWithRouter;
