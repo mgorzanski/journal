@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Acme');
+
 #root {
     display:grid;
     grid-template-columns: 80px auto 80px;
@@ -6,8 +8,41 @@
 
 .header {
     grid-column: 1 / -1;
+    display:grid;
+    grid-template-columns: 50% 50%;
+    background-color:#bbbbbb;
+    padding:11px;
+    border-bottom:10px solid #092e4d;
 }
 
 .main {
     grid-column: 2 / 3;
+}
+
+.page-title {
+    font-size:2.4em;
+    grid-column: 1 / 2;
+    font-family: 'Acme', sans-serif;
+    margin-bottom:0;
+    padding-left:0.5rem;
+}
+
+.page-title a {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.page-nav {
+    grid-column: 2 / 3;
+    justify-self: end;
+    align-self: center;
+}
+
+.page-nav-unlock-btn, .page-nav-new-btn {
+    float:left;
+    margin-left:10px;
+}
+
+.page-nav-dropdown-menu {
+    float:left;
 }
