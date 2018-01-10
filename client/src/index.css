@@ -46,3 +46,7 @@
 .page-nav-dropdown-menu {
     float:left;
 }
+
+#contentInput {
+    resize: none;
+}

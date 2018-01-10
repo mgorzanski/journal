@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Header from './components/header';
 import Home from './pages/home';
 import Error404 from './pages/errors/404';
+import NewEntry from './pages/new-entry';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           <Header />
           <main className="main">
             <Route exact path="/" component={Home} />
+            <Route path="/new" component={NewEntry} />
           </main>
         </React.Fragment>
       </Router>
