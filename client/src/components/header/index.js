@@ -19,7 +19,7 @@ class Header extends React.Component {
                         <h2 className="page-title"><Link to="/">Journal</Link></h2>
                         :
                         <Route render={({ history }) => (
-                            <Button color="secondary" className="page-nav-back-btn" onClick={() => { history.push('/') }}><i class="fas fa-caret-square-left"></i> Back</Button>
+                            <Button color="secondary" className="page-nav-back-btn" onClick={() => { history.push('/') }}><i className="fas fa-caret-square-left"></i> Back</Button>
                         )} />
                         }
                     </section>
