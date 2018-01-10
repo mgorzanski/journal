@@ -15,6 +15,7 @@ class App extends Component {
           <main className="main">
             <Route exact path="/" component={Home} />
             <Route path="/new" component={NewEntry} />
+            {/*<Route path="/entry/:id" component={Entry} />*/}
           </main>
         </React.Fragment>
       </Router>
