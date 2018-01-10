@@ -2,7 +2,7 @@
 
 #root {
     display:grid;
-    grid-template-columns: 80px auto 80px;
+    grid-template-columns: 220px auto 220px;
     grid-gap:5px;
 }
 
@@ -17,6 +17,7 @@
 
 .main {
     grid-column: 2 / 3;
+    margin-top:10px;
 }
 
 .page-title {
@@ -49,4 +50,44 @@
 
 #contentInput {
     resize: none;
+}
+
+.home-title {
+    border:1px solid #475f72;
+    background-color:#475f72;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.entry {
+    border:1px solid #d4d4d4;
+    background-color:#d4d4d4;
+    border-radius: 5px;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom:10px;
+}
+
+.entry-date {
+    float:left;
+}
+
+.entry-date a {
+    color:#333;
+}
+
+.entry-date a:hover {
+    text-decoration: underline;
+    color:#000;
+}
+
+.entry-counter {
+    color:#666;
+    float:left;
+    font-style: italic;
+    margin:10px 0 0 8px;
+}
+
+.entry-content {
+    clear:both;
 }
