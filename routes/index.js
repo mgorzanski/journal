@@ -15,13 +15,18 @@ router.get('/api/entries', function(req, res, next) {
 
 router.post('/api/add-entry', function (req, res, next) {
   let entry = req.body;
-  db.query("insert into entries (title, datetime, content) values (?,?,?)",[entry.title, entry.datetime, entry.content], function (err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json({"status": "success"});
+  db.query({
+      sql: "INSERT INTO entries (title, datetime, content) VALUES (?, ?, ?)",
+    },
+    [entry.title, entry.datetime, entry.content],
+    function (error, results, fields) {
+      if (error) {
+        res.json(error);
+      } else {
+        res.json({"status": "success"});
+      }
     }
-  });
+  );
 });
 
 module.exports = router;
