@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Route, Link } from 'react-router-dom';
+import { logout } from '../../utils/AuthService';
 import { Button, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import fontawesome from '@fortawesome/fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
@@ -34,7 +35,7 @@ class Header extends React.Component {
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem><Link to="/settings">Settings</Link></DropdownItem>
-                                <DropdownItem><Link to="/logout">Logout</Link></DropdownItem>
+                                <DropdownItem><a href="" onClick={() => logout()}>Logout</a></DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </nav>

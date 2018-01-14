@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getAccessToken } from './../../utils/AuthService';
 
 class Home extends React.Component {
     constructor(props) {
@@ -8,7 +9,10 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
-        fetch('/api/entries')
+        fetch('/api/entries', {
+            method: "GET",
+            headers: { Authorization: `Bearer ${getAccessToken()}`}
+            })
             .then((res) => {
                 return res.json();
             })
