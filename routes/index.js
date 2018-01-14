@@ -18,6 +18,10 @@ const authCheck = jwt({
 });
 
 /* GET home page. */
+router.get('/', function (req, res, next) {
+  res.send("");
+});
+
 router.get('/api/entries', authCheck, function(req, res, next) {
   db.query("select * from entries order by id desc", function (err, rows) {
     if (err) {
