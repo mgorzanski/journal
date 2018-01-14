@@ -5,6 +5,8 @@ var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 var cors = require('cors');
 
+const { check, validationResult } = require('express-validator/check');
+
 const authCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -32,8 +34,17 @@ router.get('/api/entries', authCheck, function(req, res, next) {
   });
 });
 
-router.post('/api/add-entry', function (req, res, next) {
-  let entry = req.body;
+router.post('/api/add-entry', [
+  check('title').exists(),
+  check('datetime').exists().matches(/\d\-/),
+  check('content').exists().not().isEmpty(),
+], authCheck, function (req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.mapped() });
+  }
+
+  const entry = req.body;  
   db.query({
       sql: "INSERT INTO entries (title, datetime, content) VALUES (?, ?, ?)",
     },

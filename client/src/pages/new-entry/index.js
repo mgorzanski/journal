@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { getAccessToken } from './../../utils/AuthService';
+import Joi from 'joi';
 
 class NewEntry extends React.Component {
     constructor(props) {
@@ -39,21 +41,32 @@ class NewEntry extends React.Component {
     handleSubmit() {
         let datetime = this.getCurrentMysqlDatetime();
         this.setState({ datetime }, () => {
-            fetch('/api/add-entry', {
-                method: 'POST',
-                body: JSON.stringify({
-                    title: this.state.title,
-                    datetime: this.state.datetime,
-                    content: this.state.content
-                }),
-                headers: {"Content-Type": "application/json"}
-                }) 
-                .then(function (res) {
-                    console.log(res.json());
-                })
-                .catch(function (err) {
-                    console.log(err)
-                });
+            const schema = Joi.object().keys({
+                datetime: Joi.string().required(),
+                content: Joi.string().required()
+            }).with('datetime', 'content');
+
+            Joi.validate({ datetime: this.state.datetime, content: this.state.content }, schema, (err, value) => {
+                if (err !== null) {
+                    console.log(err);
+                } else {
+                    fetch('/api/add-entry', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            title: this.state.title,
+                            datetime: this.state.datetime,
+                            content: this.state.content
+                        }),
+                        headers: {"Content-Type": "application/json", Authorization: `Bearer ${getAccessToken()}`}
+                    }) 
+                    .then(function (res) {
+                        console.log(res.json());
+                    })
+                    .catch(function (err) {
+                        console.log(err)
+                    });
+                }
+            });
         });
     }
 
