@@ -30,6 +30,12 @@ class NewEntry extends React.Component {
         return date;
     }
 
+    componentDidMount() {
+        if (sessionStorage.getItem("newEntryContent") !== null) {
+            this.setState({ content: sessionStorage.getItem("newEntryContent") });
+        }
+    }
+
     handleChange(event) {
         const target = event.target;
         const value = target.value;
@@ -37,6 +43,8 @@ class NewEntry extends React.Component {
 
         this.setState({
             [name]: value
+        }, () => {
+            sessionStorage.setItem("newEntryContent", this.state.content);
         });
     }
 
@@ -63,7 +71,8 @@ class NewEntry extends React.Component {
                         headers: {"Content-Type": "application/json", Authorization: `Bearer ${getAccessToken()}`}
                     }) 
                     .then(function (res) {
-                        console.log(res.json());
+                        //console.log(res.json());
+                        sessionStorage.removeItem("newEntryContent");
                         history.push('/');
                     })
                     .catch(function (err) {
