@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { getAccessToken } from './../../utils/AuthService';
 import Joi from 'joi';
+import history from './../../utils/history';
 
 class NewEntry extends React.Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class NewEntry extends React.Component {
             title: '',
             datetime: '',
             content: '',
-            entries: []
+            entries: [],
+            contentError: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,12 +45,13 @@ class NewEntry extends React.Component {
         this.setState({ datetime }, () => {
             const schema = Joi.object().keys({
                 datetime: Joi.string().required(),
-                content: Joi.string().required()
+                content: Joi.string().required().error(new Error("Content cannot be empty"))
             }).with('datetime', 'content');
 
             Joi.validate({ datetime: this.state.datetime, content: this.state.content }, schema, (err, value) => {
                 if (err !== null) {
-                    console.log(err);
+                    //console.log(err);
+                    this.setState({ contentError: err.message});
                 } else {
                     fetch('/api/add-entry', {
                         method: 'POST',
@@ -61,6 +64,7 @@ class NewEntry extends React.Component {
                     }) 
                     .then(function (res) {
                         console.log(res.json());
+                        history.push('/');
                     })
                     .catch(function (err) {
                         console.log(err)
@@ -82,6 +86,9 @@ class NewEntry extends React.Component {
                         </FormGroup>
                         
                         <FormGroup>
+                            {this.state.contentError !== null ?
+                            <Alert color="danger">{this.state.contentError}</Alert>
+                            : ''}
                             <Label for="contentInput">Content</Label>
                             <Input type="textarea" value={this.state.content} rows="18" name="content" id="contentInput" onChange={this.handleChange} />
                         </FormGroup>
