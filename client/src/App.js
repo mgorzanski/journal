@@ -16,6 +16,7 @@ class App extends Component {
         <Router history={history}>
           <React.Fragment>
             <Route path="/callback" component={Callback} />
+            <Route path="/login" component={Login} />
             {
               ( isLoggedIn() ) ? (
                   <React.Fragment>
